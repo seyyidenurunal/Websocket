@@ -15,8 +15,18 @@ io.on('connection', (socket) => {
     socket.on('chat', data => {
         io.sockets.emit('chat', data)
     })
+}) ;
 
-    socket.on('typing', data => {
-        socket.broadcast.emit('typing', data)
-    })
+socket.on('typing', data => {
+    socket.broadcast.emit('typing', data)
 })
+
+socket.on('chat', data => {
+    feedback.innerHTML = '';
+    output.innerHTML += '<p><strong>' + data.sender + ' : </strong>' + data.message + '</p>'
+    message.value = '';
+});
+    
+socket.on('typing', data => {
+    feedback.innerHTML = '<p>' + data + ' yazıyor...</p>'
+});
